@@ -28,5 +28,5 @@ Why No
 
 Concepts and Terminology
 Any event generally like pushing and otheres from github api cal be accesed in github Actions
-Workflows(pipelines) - file contains jobs that may have multiple steps and are triggered by events
+Workflows(pipelines) - file that contains jobs that may have multiple steps and are triggered by events
 Runner: Server environment that executes jobs. vary across jobs
