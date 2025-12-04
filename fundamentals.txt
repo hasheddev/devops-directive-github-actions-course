@@ -1,0 +1,32 @@
+Motivation
+
+Cronjobs + Shell scrits on random server
+Due to speed of software updates (days/day) the tooling for automating and building test has evoled to make shipping fast and safe. CI and automated came into the picture from 1997 instead of manual testing.
+This was tinderbox that looks at commits and builds for target and reports back for bugfix later.Since there has been multiple integration tools like gitlab ci/cd/ githubactions, jenkins e.t.c
+
+Common Workflow Types:
+1 Validate: Lint, Test, Static analysis(security, code quality).
+
+2 Build: Executable, Conainer Image
+
+3 Deploy: Push based deploys, Update tags for git-ops deploys
+
+4 Repo Automations: Release automations, Stablw Issues/Prs, Dependency upgrades
+
+Why Github Actions
+Most popular are Jenkins, Githubactions, Gitlab Ci and Azure Devops server
+- Code is already on github already(likely)
+- Minimal barrier to entry
+- Expansive public marketplace
+- Market Leadership leads to improved tooling
+
+Why No
+- If not using gitub already
+- Less powerful pipeline reuse primitives
+- Painful debugging experience
+- Limited analytics/obeservability
+
+Concepts and Terminology
+Any event generally like pushing and otheres from github api cal be accesed in github Actions
+Workflows(pipelines) - file contains jobs that may have multiple steps and are triggered by events
+Runner: Server environment that executes jobs. vary across jobs
