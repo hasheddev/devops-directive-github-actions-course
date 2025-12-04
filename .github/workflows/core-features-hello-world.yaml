@@ -1,4 +1,4 @@
-name: Hello World
+name: Hello World M
 
 on:
   workflow_dispatch: #manually trigger workflow
