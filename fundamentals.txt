@@ -27,6 +27,108 @@ Why No
 - Limited analytics/obeservability
 
 Concepts and Terminology
-Any event generally like pushing and otheres from github api cal be accesed in github Actions
+Any event generally like pushing and otheres from github api can be accesaed in github Actions this includes push to branch, create/update pull request, cron schedule and so on
+
 Workflows(pipelines) - file that contains jobs that may have multiple steps and are triggered by events
 Runner: Server environment that executes jobs. vary across jobs
+
+Interjob output
+run: |
+
+foo=bar
+echo "foo=$foo" >> "$GITHUB_OUTPUT"
+echo "foo=$foo" >> "$GITHUB_EBV"
+
+Contexts
+needs: outputs & results from dependent jobs
+steps: Prior steps outputs
+secrets: secret va;ues includes github token maked by github but care should be taken
+vars: config variables (great for cross-workflow settings)
+
+github: run & event metadata (repo,ref, sha, event_name e.t.c)
+env: varaibles set at workflow/job/step scope (override step > job > workflow)
+matrix: matrix startegy info(job-index, job-total, fail-fast, max-parallel)
+job: current job status; container/service info
+runner: runner OS/arch/temp/tool_cache
+inputs: parameters to reusable/workflow_dispatch workflows
+
+ADVANCED
+
+Runners(types):
+Github hoster
+3rd party runner like namespace runner
+Self hosted: Open source
+
+Runner type specified controls
+VM image used (OS + Dependencies)
+Resource available (CPU + MEMORY)
+
+Artifacts: allows for data persistence beyond runner lifecycle using artifact action
+used for keeping records of files and test results across action runs. Used to save run outputs
+
+Cache use cache action
+Allows reuse of data 10Gb default deletes stale data contant to free space or after 7 daya of not being used. Data is stored in a remote storage object
+Use cache for reusing e,g dependencies that take time to download
+
+Matrix and Conditional
+matrix enables executing multiple copies of a job with different configs
+if: allows for conditional execution of jobs and steps
+
+concurrency: controls how multipls runs of the same workflows should be handled
+
+Evaluating actions
+Access like any open source Dependency
+Does it do what you need it for?
+Signals for quality/trustworthiness
+- user verification(blue checkmark)
+- Number of starts(High number)
+- Active commit history
+
+Popular actions
+Official: checkout, cache, artifact, github-script(interact with github entity with async javascript)
+Runtime installation: setup-node, setup-go, setup-java-jdk
+Super-linter
+Build/push docker images
+Auth to 3rd party system: Aws, Azure, GCP
+
+Write/Reuse Actions
+Composite actions(action.yaml file similar to workflow)
+Reusable Workflow
+Javascript/Typescript
+Container action
+
+Developer experience
+Iterating on actions: Write test, Run locally
+
+Iterating on workflows:
+Setup ide
+Run logic(independent of workflow locally)
+Run locally
+SSh into runner
+step debug logging ACTIONS_STEP_DEBUG: true
+Runner debug logging: ACTIONS_RUNNER_DEBUG: true
+
+Optimizing workflows:
+Viewing timing and resource usage data
+Exploring timing data
+
+Best practice
+Measure performance: export timimng to thrid party platforms to know where to invest time
+Wait less: Fail fast,minimizerunner queueing
+Do less: Conditiona filters, caching
+Improve resource usage: parallelize(core + jobs), Avoid emulation(qemu)
+Prevent skiwdowns
+
+Caching: cache repo so new runs pulls in delta
+cache toolchains
+cache dependency dowloads
+cache Test/build Artifacts
+cache container images,layers, cache mounts
+
+BEST Practices
+Grant minimum necessary permissions
+Avoid long live credentials where possible
+Set up allowlists for specific approved actions
+Pin action versions with the sha
+Don't allow self hosted runners to execute fork Prs
+Require approval to run workflows using environments.
